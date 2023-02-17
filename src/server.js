@@ -1,23 +1,16 @@
 'use strict';
 
 const express = require('express');
-const logger = require('./middleware/logger.js');
 const notFound = require('./handlers/404');
 const errorHandler = require('./handlers/500');
 const PORT = process.env.PORT || 3002;
-
-
+const characterRouter = require('./routes/character');
 const app = express();
 
-// app.use(express.json());
-
-// app.use(logger);
+app.use(express.json());
 
 
-app.get('/', logger, (req, res, next) => {
-
-  res.status(200).send(req.log);
-});
+app.use(characterRouter); 
 
 app.get('/bad', (req, res, next) => {
   next('we have an error');
